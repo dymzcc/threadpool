@@ -193,9 +193,9 @@ int threadpool::is_thread_alive(pthread_t tid) {
 
 /* 测试，模拟线程池中线程处理业务*/
 void *process(void *arg) {
-    printf("thread 0x%x working on task %d\n ", pthread_self(),
+    printf("thread 0x%x working on task %d\n ", (unsigned int)pthread_self(),
            *(int *)arg);
-    sleep(5);
+    sleep(1);
     printf("task %d is end\n", *(int *)arg);
 
     return NULL;
@@ -205,7 +205,7 @@ int main(void){
     threadpool *pool = new threadpool(3, 100, 100);
 
     int num[20], i;
-    for (i = 0; i < 100; i++) {
+    for (i = 0; i < 20; i++) {
         num[i]=i;
         printf("add task %d\n",i);
         pool->threadpool_add(pool, process, (void*)&num[i]);     /* 向线程池中添加任务 */
